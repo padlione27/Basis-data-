@@ -1,0 +1,97 @@
+# 🏠 KosMart – Database Sistem 
+Usaha Mini Mart & Layanan Mahasiswa
+
+Ini adalah struktur database untuk sistem **KosMart**, yaitu sistem digital usaha yang menyediakan kebutuhan harian anak kos, seperti belanja barang, laundry, cetak dokumen, dan lainnya. Cocok untuk bisnis fleksibel dari kamar kos.
+
+---
+
+## 🛠 Teknologi
+
+- Database: MySQL / PostgreSQL
+- Ditulis dalam file `kosmart_schema.sql`
+- Data simulasi tersedia dalam `kosmart_dummy_data.sql`
+
+---
+
+## 📂 Struktur Tabel
+
+### 1. `customers` – Data pembeli/pengguna
+| Kolom       | Tipe Data   | Keterangan                                |
+|-------------|-------------|-------------------------------------------|
+| id          | SERIAL      | Primary key                               |
+| name        | VARCHAR     | Nama lengkap                              |
+| email       | VARCHAR     | Email unik                                |
+| phone       | VARCHAR     | Nomor HP                                  |
+| address     | TEXT        | Alamat kos/kamar                          |
+| created_at  | TIMESTAMP   | Tanggal registrasi                        |
+
+---
+
+### 2. `products` – Barang/jasa yang dijual
+| Kolom       | Tipe Data   | Keterangan                                |
+|-------------|-------------|-------------------------------------------|
+| id          | SERIAL      | Primary key                               |
+| name        | VARCHAR     | Nama produk atau layanan (contoh: Indomie, Laundry Express) |
+| description | TEXT        | Deskripsi lengkap                         |
+| price       | INTEGER     | Harga dalam Rupiah                        |
+| stock       | INTEGER     | Jumlah stok (jika barang)                 |
+| category    | VARCHAR     | Kategori (makanan, alat mandi, laundry, print) |
+| created_at  | TIMESTAMP   | Tanggal ditambahkan                       |
+
+---
+
+### 3. `orders` – Riwayat pemesanan barang/jasa
+| Kolom       | Tipe Data   | Keterangan                                |
+|-------------|-------------|-------------------------------------------|
+| id          | SERIAL      | Primary key                               |
+| customer_id | INTEGER     | Foreign key ke `customers`                |
+| total_price | INTEGER     | Total biaya pesanan                       |
+| status      | VARCHAR     | Status (menunggu, diproses, selesai)      |
+| order_time  | TIMESTAMP   | Tanggal & waktu order                     |
+
+---
+
+### 4. `order_items` – Rincian item dalam pesanan
+| Kolom       | Tipe Data   | Keterangan                                |
+|-------------|-------------|-------------------------------------------|
+| id          | SERIAL      | Primary key                               |
+| order_id    | INTEGER     | Foreign key ke `orders`                   |
+| product_id  | INTEGER     | Foreign key ke `products`                 |
+| quantity    | INTEGER     | Jumlah item                               |
+| price       | INTEGER     | Harga per item saat transaksi             |
+
+---
+
+### 5. `payments` – Data pembayaran
+| Kolom          | Tipe Data   | Keterangan                                |
+|----------------|-------------|-------------------------------------------|
+| id             | SERIAL      | Primary key                               |
+| order_id       | INTEGER     | Foreign key ke `orders`                   |
+| amount         | INTEGER     | Jumlah bayar                              |
+| payment_method | VARCHAR     | QRIS, Cash, Transfer                      |
+| status         | VARCHAR     | sukses, pending, gagal                    |
+| paid_at        | TIMESTAMP   | Tanggal pembayaran                        |
+
+---
+
+## 💡 Fitur Tambahan yang Bisa Dikembangkan
+
+- History order per minggu/bulan
+- Sistem poin & reward anak kos
+- Notifikasi WhatsApp otomatis
+- Integrasi dengan printer untuk struk
+- Dashboard kasir & admin stok
+
+---
+
+## 🧪 Dummy Data
+
+Cek file `kosmart_dummy_data.sql` untuk melihat simulasi data barang, pesanan, dan transaksi.
+
+---
+
+## 📦 Cara Menggunakan
+
+```bash
+git clone https://github.com/namamu/kosmart-db.git
+cd kosmart-db
